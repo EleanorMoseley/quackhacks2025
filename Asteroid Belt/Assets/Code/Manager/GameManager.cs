@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager Start");
 
         CurrentState = GameState.MainMenu;
-        Time.timeScale = 1f;
+        Time.timeScale = 0f;
 
         if (startButton != null)
         {
