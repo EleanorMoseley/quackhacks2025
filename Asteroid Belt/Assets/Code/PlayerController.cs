@@ -5,13 +5,21 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Aim Settings")]
-    public Camera cam; // assign in Inspector
+    public Camera cam;                    // assign in Inspector
     [SerializeField] private LayerMask planeLayer;
-    public Transform tip;   // assign in Inspector
+    public Transform tip;                // assign in Inspector
 
-    //public float sensitivity = 100f;    // less important
     [SerializeField]
     [Range(0f, 1f)] private float rotSpeed = 0.1f;
+
+    [Header("Laser Shooting")]
+    [SerializeField] private ParticleSystem laserParticleSystem;
+    [SerializeField] private LayerMask hitLayers;   // layers the laser can damage / hit
+    [SerializeField] private float laserRange = 1000f;
+    [SerializeField] private int laserDamage = 10;
+
+    private Vector3 currentAimDir = Vector3.right;
+    private bool hasValidAim = false;
 
     // Clamp values
     private const float pitchMin = -65f;
@@ -32,6 +40,11 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         AimGunAtMouse();
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            FireLaser();
+        }
     }
 
     private void AimGunAtMouse()
@@ -49,12 +62,14 @@ public class PlayerController : MonoBehaviour
             hasHit = true;
 
             Vector3 dir = (hitPoint - tip.position).normalized;
-            // DO NOT MAKE THIS tip.up. YOU WILL SUFFER.
-            // also, don't change the rotation of the tip on the z axis, it may look in the editor, but it isn't. This is funny.
+
+            currentAimDir = dir;
+            hasValidAim = true;
+
+            // Rotation toward aim
             Quaternion targetRot = Quaternion.FromToRotation(tip.forward, dir);
 
-            // come back to this later
-            //// Clamp pitch & yaw
+            // ----- Clamp pitch & yaw -----
             Vector3 euler = targetRot.eulerAngles;
 
             float pitch = euler.x;
@@ -68,18 +83,41 @@ public class PlayerController : MonoBehaviour
 
             Quaternion clampedRot = Quaternion.Euler(pitch, yaw, 0f);
 
-            // set rotation :)
-            // Lerping is bad for this
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotSpeed);
-            // incase lerping breaks, switch back to this and turn off the clamping.
-            //transform.rotation = targetRot;
-
-            //Debug.Log($"Pitch: {pitch}, Yaw: {yaw}");
-            //Debug.Log($"Pointing at: {hitPoint}");
+            // Use clampedRot (was using targetRot before)
+            transform.rotation = Quaternion.Slerp(transform.rotation, clampedRot, rotSpeed);
+            // Or if you want snappy:
+            // transform.rotation = clampedRot;
         }
         else
         {
+            // No plane hit: still allow aiming along camera ray
             hasHit = false;
+            currentAimDir = ray.direction;
+            hasValidAim = true;
+        }
+    }
+
+    private void FireLaser()
+    {
+        if (!hasValidAim) return;
+
+        // 1) Do the actual gameplay raycast
+        if (Physics.Raycast(tip.position, currentAimDir, out RaycastHit hit, laserRange, hitLayers))
+        {
+            // Damage
+            //hit.collider.GetComponent<Damageable>()?.TakeDamage(laserDamage);
+
+            // Debug info for gizmos
+            debugHitPoint = hit.point;
+            hasHit = true;
+        }
+
+        // 2) Play the laser visual
+        if (laserParticleSystem != null)
+        {
+            laserParticleSystem.transform.position = tip.position;
+            laserParticleSystem.transform.rotation = Quaternion.LookRotation(currentAimDir, Vector3.up);
+            laserParticleSystem.Play();
         }
     }
 
@@ -99,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
             // line from gun -> hit point
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, debugHitPoint);
+            Gizmos.DrawLine(tip != null ? tip.position : transform.position, debugHitPoint);
         }
     }
 }
