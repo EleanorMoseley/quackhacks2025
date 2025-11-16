@@ -6,7 +6,6 @@ using UnityEngine;
 public struct PlayerStats
 {
     public int maxHealth;
-    public float moveSpeed;
     public float damage;
     public float fireRate;
 }

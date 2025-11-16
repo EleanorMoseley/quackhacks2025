@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,11 +21,11 @@ public class GameManager : MonoBehaviour
     public PlayerStats basePlayerStats;
 
     [Header("Economy")]
-    public int totalMoney;      // across rounds
-    public int roundMoney;     // earned during a round
+    public int totalMoney;   // across rounds
+    public int roundMoney;   // earned during a round
 
-    [Header("Spawners (ParticleSystems)")]
-    [SerializeField] private ParticleSystem[] spawnSystems;
+    [Header("Spawners (VFX Graph)")]
+    [SerializeField] private VisualEffect[] spawnSystems;
 
     public GameState CurrentState { get; private set; }
 
@@ -36,77 +38,131 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
+
+        // auto-hook UI events
+        //if (startButton != null)
+        //{
+        //    startButton.onClick.AddListener(StartRound);
+        //}
+        //if (endButton != null)
+        //{
+        //    endButton.onClick.AddListener(EndRound);
+        //}
     }
 
     private void Start()
     {
+        Debug.Log("GameManager Start");
+
         CurrentState = GameState.MainMenu;
         Time.timeScale = 1f;
+
+        if (startButton != null)
+        {
+            startButton.interactable = true;
+        }
+        else
+        {
+            Debug.LogWarning("startButton is NOT assigned on GameManager!", this);
+        }
+
+        if (endButton != null)
+        {
+            endButton.interactable = false;
+        }
+        else
+        {
+            Debug.LogWarning("endButton is NOT assigned on GameManager!", this);
+        }
+
+        Debug.Log($"spawnSystems length = {spawnSystems?.Length ?? -1}");
     }
+
+
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button endButton;
 
     public void StartRound()
     {
+        Debug.Log("StartRound called!");
+
         CurrentState = GameState.Playing;
         Time.timeScale = 1f;
 
-        // init stats, money, etc.
+        // UI: toggle buttons
+        //if (startButton != null) startButton.interactable = false;
+        startButton.enabled = false;
+        //if (endButton != null) endButton.interactable = true;
+        endButton.enabled = true;
+
+        // reset round money
         roundMoney = 0;
 
+        // init player stats from base (struct copy)
         var playerStats = FindObjectOfType<PlayerStatsComponent>();
         if (playerStats != null)
         {
-            // PlayerStats is a struct!!
             playerStats.InitFromBaseStats(basePlayerStats);
         }
 
-        // turn on particle-based spawners
-        foreach (var ps in spawnSystems)
+        // turn ON VFX-based spawners
+        foreach (var vfx in spawnSystems)
         {
-            if (ps == null) continue;
+            if (vfx == null) continue;
 
-            // Make sure emission is enabled and play the system
-            var emission = ps.emission;
-            emission.enabled = true;
-            ps.Play(true);
+            // if your graph is controlled just by play/stop:
+            vfx.Play();
+
+            // OPTIONAL: if you use an exposed "SpawnRate" or "IsSpawning" param:
+            // if (vfx.HasFloat("SpawnRate")) vfx.SetFloat("SpawnRate", 100f);
+            // if (vfx.HasBool("IsSpawning")) vfx.SetBool("IsSpawning", true);
         }
     }
 
     public void EndRound()
     {
+        Debug.Log("EndRound called!");
         if (CurrentState == GameState.GameOver) return;
 
         CurrentState = GameState.GameOver;
 
-        // store money
+        // UI: toggle buttons
+        //if (startButton != null) startButton.interactable = true;
+        startButton.enabled = true;
+        //if (endButton != null) endButton.interactable = false;
+        endButton.enabled = false;
+
+        // 1. Store money
         totalMoney += roundMoney;
         roundMoney = 0;
 
-        // turn off particle-based spawners
-        foreach (var ps in spawnSystems)
+        // 2. Turn OFF VFX-based spawners
+        foreach (var vfx in spawnSystems)
         {
-            if (ps == null) continue;
+            if (vfx == null) continue;
 
-            // disable emission so new particles don't spawn!!!
-            var emission = ps.emission;
-            emission.enabled = false;
+            // stop all spawn systems in the VFX Graph
+            vfx.Stop();
 
-            // stop the system:
-            // - StopEmitting: keeps current particles until they die
-            // - StopEmittingAndClear: kills everything immediately
-            ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            // OPTIONAL: also zero out spawn params if you use them
+            // if (vfx.HasFloat("SpawnRate")) vfx.SetFloat("SpawnRate", 0f);
+            // if (vfx.HasBool("IsSpawning")) vfx.SetBool("IsSpawning", false);
         }
 
-        // disable player input / shooting
+        // 3. Disable player input / shooting
         var playerController = FindObjectOfType<PlayerController>();
         if (playerController != null)
         {
             playerController.enabled = false;
         }
 
-        // optional! freeze gameplay *after* stopping spawners.
+        // 4. Freeze gameplay time (optional)
         Time.timeScale = 0f;
 
-        // show and hide UI screen TODO.
+        // 5. TODO: show Game Over UI
     }
+
+
+
 }

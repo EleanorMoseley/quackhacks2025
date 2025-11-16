@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
             //transform.rotation = targetRot;
 
             //Debug.Log($"Pitch: {pitch}, Yaw: {yaw}");
-            Debug.Log($"Pointing at: {hitPoint}");
+            //Debug.Log($"Pointing at: {hitPoint}");
         }
         else
         {
