@@ -544,37 +544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d23922b6f56f84f4e9fc970c91b25bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &592699494
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 592699495}
-  m_Layer: 0
-  m_Name: Test
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &592699495
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 592699494}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +762,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726976626}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 8
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -4561,7 +4530,7 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
     inside: 1
     outside: 0
@@ -5828,7 +5797,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 9088bb3ea27fc0f469bf6c4bcacad257, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -5924,7 +5893,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3c247c713e77e63448ebea56f562fafc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -6024,7 +5993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 751079734}
   sfxSource: {fileID: 751079733}
-  defaultMusic: {fileID: 0}
+  defaultMusic: {fileID: 8300000, guid: 3c247c713e77e63448ebea56f562fafc, type: 3}
 --- !u!4 &751079736
 Transform:
   m_ObjectHideFlags: 0
@@ -6419,7 +6388,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.38, z: -10}
+  m_LocalPosition: {x: 0, y: 4.38, z: -22.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6469,37 +6438,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!1 &969224698
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 969224699}
-  m_Layer: 0
-  m_Name: Amptjer test
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &969224699
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 969224698}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 585.0541, y: 447.62564, z: 2.777365}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1019905579
 GameObject:
   m_ObjectHideFlags: 0
@@ -7105,7 +7043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3860882686696794820, guid: 8e100029e870c8047b1f82a40ad56908, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -13.7
       objectReference: {fileID: 0}
     - target: {fileID: 3860882686696794820, guid: 8e100029e870c8047b1f82a40ad56908, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7143,6 +7081,14 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 7144939244342470232, guid: 8e100029e870c8047b1f82a40ad56908, type: 3}
+      propertyPath: rotSpeed
+      value: 0.951
+      objectReference: {fileID: 0}
+    - target: {fileID: 7144939244342470232, guid: 8e100029e870c8047b1f82a40ad56908, type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 7301205393202400877, guid: 3004219e7aef5f24eb42ee88cd0cc7cd, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7159,9 +7105,7 @@ SceneRoots:
   - {fileID: 5623712539615191486}
   - {fileID: 1827183658}
   - {fileID: 2951482660061498647}
-  - {fileID: 592699495}
   - {fileID: 836227082}
-  - {fileID: 969224699}
   - {fileID: 726976629}
   - {fileID: 1345349298}
   - {fileID: 751079736}
