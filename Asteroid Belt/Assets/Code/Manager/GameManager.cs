@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine.VFX;
 
@@ -21,6 +22,9 @@ public class GameManager : MonoBehaviour
     public PlayerStats basePlayerStats;
 
     [Header("Economy")]
+    [SerializeField] private TMP_Text highScoreText;
+    [SerializeField] private TMP_Text roundMoneyText;
+
     public int totalMoney;
     public int roundMoney;
 
@@ -98,6 +102,7 @@ public class GameManager : MonoBehaviour
 
         // reset round money
         roundMoney = 0;
+        roundMoneyText.text = $"Round Money: ${roundMoney}";
 
 
 
@@ -123,6 +128,8 @@ public class GameManager : MonoBehaviour
         // 1. Store money
         totalMoney += roundMoney;
         roundMoney = 0;
+        highScoreText.text = $"Total Money: ${totalMoney}";
+        roundMoneyText.text = $"Round Money: ${roundMoney}";
 
         // 2. Turn OFF VFX-based spawners
         foreach (var vfx in spawnSystems)
@@ -142,5 +149,5 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
 
         // 5. TODO: show Game Over UI
-    }
+    }   
 }
