@@ -1,0 +1,32 @@
+https://ilkaytobello.itch.io/space-hud-vector
+
+- used for the reticle
+- used for the round border UI
+
+https://gargore.itch.io/asteroids
+- asteroid sufferage :)
+- used for asteroids & textures. This turned out to be quite funny because it was hard to figure out
+- we love them
+
+https://tools.wwwtyro.net/space-3d/index.html#animationSpeed=0&fov=80&nebulae=true&pointStars=true&resolution=1024&seed=4635m3c0eji&stars=true&sun=true
+- a VERY VERY cool tool used for game dev!
+- this was a customizable random seed space skybox maker! HELL YEAH!
+- our seed was 4635m3c0eji
+
+https://psionicgames.itch.io/low-poly-space-ship-pack
+- spaceship! spaceship? 
+- https://www.youtube.com/watch?v=7TYJyCCO8Dc
+
+https://crusenho.itch.io/complete-ui-essential-pack
+- for UI, maybe not. I paid for this :(
+- yayyy???
+
+Hey, so if you are reading this far, we probably made it through it qualifications.
+
+If we even got top 5, thank you.
+
+If we didn't... still thank you.
+
+If you're thinking now, "hmmmm maybe we shouldn't consider them", this message was not meant to persuade you this way. Thank you,
+
+Sincerely, team rubber ducky. (he was our vibe coder)
