@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Laser Shooting")]
     [SerializeField] private ParticleSystem laserParticleSystem;
+    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private LayerMask hitLayers;   // layers the laser can damage / hit
     [SerializeField] private float laserRange = 1000f;
     [SerializeField] private int laserDamage = 10;
@@ -104,15 +105,31 @@ public class PlayerController : MonoBehaviour
         // 1) Do the actual gameplay raycast
         if (Physics.Raycast(tip.position, currentAimDir, out RaycastHit hit, laserRange, hitLayers))
         {
-            // Damage
-            //hit.collider.GetComponent<Damageable>()?.TakeDamage(laserDamage);
-
             // Debug info for gizmos
             debugHitPoint = hit.point;
             hasHit = true;
+
+            // If you want hitscan damage instead of projectile collision:
+             Destroy(hit.collider.gameObject);
         }
 
-        // 2) Play the laser visual
+        // 2) Spawn projectile that visually travels along the same direction
+        if (projectilePrefab != null)
+        {
+            GameObject proj = Instantiate(
+                projectilePrefab,
+                tip.position,
+                Quaternion.LookRotation(currentAimDir, Vector3.up)
+            );
+
+            LazerProjectile laserProj = proj.GetComponent<LazerProjectile>();
+            if (laserProj != null)
+            {
+                laserProj.Init(currentAimDir);
+            }
+        }
+
+        // 3) Optional: keep your muzzle flash / laser PS at the tip
         if (laserParticleSystem != null)
         {
             laserParticleSystem.transform.position = tip.position;
@@ -120,6 +137,7 @@ public class PlayerController : MonoBehaviour
             laserParticleSystem.Play();
         }
     }
+
 
     private void OnDrawGizmos()
     {
