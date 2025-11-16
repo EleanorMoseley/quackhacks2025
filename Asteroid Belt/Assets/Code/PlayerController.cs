@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask planeLayer;
     public Transform tip;   // assign in Inspector
 
-    public float sensitivity = 100f;    // less important
+    //public float sensitivity = 100f;    // less important
     [SerializeField]
     [Range(0f, 1f)] private float rotSpeed = 0.1f;
 
@@ -49,7 +49,9 @@ public class PlayerController : MonoBehaviour
             hasHit = true;
 
             Vector3 dir = (hitPoint - tip.position).normalized;
-            Quaternion targetRot = Quaternion.FromToRotation(tip.up, dir) * transform.rotation;
+            // DO NOT MAKE THIS tip.up. YOU WILL SUFFER.
+            // also, don't change the rotation of the tip on the z axis, it may look in the editor, but it isn't. This is funny.
+            Quaternion targetRot = Quaternion.FromToRotation(tip.forward, dir);
 
             // come back to this later
             //// Clamp pitch & yaw
