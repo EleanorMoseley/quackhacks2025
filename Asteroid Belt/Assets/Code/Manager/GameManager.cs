@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         MainMenu,
-        Countdown,  // like starting a race, 3, 2, 1 GO!
-        Playing,    // enable PlayerController, cursor locked outside of UI to game
-        Paused,     // unlock Cursor, view UI, freeze time &|| input
-        GameOver    // show results, add money, disable shooting and spawning
+        Countdown,
+        Playing,
+        Paused,
+        GameOver
     }
 
     public static GameManager Instance { get; private set; }
@@ -21,13 +21,16 @@ public class GameManager : MonoBehaviour
     public PlayerStats basePlayerStats;
 
     [Header("Economy")]
-    public int totalMoney;   // across rounds
-    public int roundMoney;   // earned during a round
+    public int totalMoney;
+    public int roundMoney;
 
     [Header("Spawners (VFX Graph)")]
     [SerializeField] private VisualEffect[] spawnSystems;
 
     public GameState CurrentState { get; private set; }
+
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button endButton;
 
     private void Awake()
     {
@@ -38,17 +41,6 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-        //DontDestroyOnLoad(gameObject);
-
-        // auto-hook UI events
-        //if (startButton != null)
-        //{
-        //    startButton.onClick.AddListener(StartRound);
-        //}
-        //if (endButton != null)
-        //{
-        //    endButton.onClick.AddListener(EndRound);
-        //}
     }
 
     private void Start()
@@ -60,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         if (startButton != null)
         {
-            startButton.interactable = true;
+            startButton.gameObject.SetActive(true);
         }
         else
         {
@@ -69,7 +61,7 @@ public class GameManager : MonoBehaviour
 
         if (endButton != null)
         {
-            endButton.interactable = false;
+            endButton.gameObject.SetActive(false);
         }
         else
         {
@@ -79,10 +71,6 @@ public class GameManager : MonoBehaviour
         Debug.Log($"spawnSystems length = {spawnSystems?.Length ?? -1}");
     }
 
-
-    [SerializeField] private Button startButton;
-    [SerializeField] private Button endButton;
-
     public void StartRound()
     {
         Debug.Log("StartRound called!");
@@ -90,14 +78,12 @@ public class GameManager : MonoBehaviour
         CurrentState = GameState.Playing;
         Time.timeScale = 1f;
 
-        // UI: toggle buttons
-        //if (startButton != null) startButton.interactable = false;
-        startButton.enabled = false;
-        //if (endButton != null) endButton.interactable = true;
-        endButton.enabled = true;
-
-        // reset round money
-        roundMoney = 0;
+        // Re-enable player input / shooting
+        var playerController = FindObjectOfType<PlayerController>();
+        if (playerController != null)
+        {
+            playerController.enabled = true;
+        }
 
         // init player stats from base (struct copy)
         var playerStats = FindObjectOfType<PlayerStatsComponent>();
@@ -106,17 +92,20 @@ public class GameManager : MonoBehaviour
             playerStats.InitFromBaseStats(basePlayerStats);
         }
 
+        // UI: toggle buttons
+        if (startButton != null) startButton.gameObject.SetActive(false);
+        if (endButton != null) endButton.gameObject.SetActive(true);
+
+        // reset round money
+        roundMoney = 0;
+
+
+
         // turn ON VFX-based spawners
         foreach (var vfx in spawnSystems)
         {
             if (vfx == null) continue;
-
-            // if your graph is controlled just by play/stop:
             vfx.Play();
-
-            // OPTIONAL: if you use an exposed "SpawnRate" or "IsSpawning" param:
-            // if (vfx.HasFloat("SpawnRate")) vfx.SetFloat("SpawnRate", 100f);
-            // if (vfx.HasBool("IsSpawning")) vfx.SetBool("IsSpawning", true);
         }
     }
 
@@ -128,10 +117,8 @@ public class GameManager : MonoBehaviour
         CurrentState = GameState.GameOver;
 
         // UI: toggle buttons
-        //if (startButton != null) startButton.interactable = true;
-        startButton.enabled = true;
-        //if (endButton != null) endButton.interactable = false;
-        endButton.enabled = false;
+        if (startButton != null) startButton.gameObject.SetActive(true);
+        if (endButton != null) endButton.gameObject.SetActive(false);
 
         // 1. Store money
         totalMoney += roundMoney;
@@ -141,13 +128,7 @@ public class GameManager : MonoBehaviour
         foreach (var vfx in spawnSystems)
         {
             if (vfx == null) continue;
-
-            // stop all spawn systems in the VFX Graph
             vfx.Stop();
-
-            // OPTIONAL: also zero out spawn params if you use them
-            // if (vfx.HasFloat("SpawnRate")) vfx.SetFloat("SpawnRate", 0f);
-            // if (vfx.HasBool("IsSpawning")) vfx.SetBool("IsSpawning", false);
         }
 
         // 3. Disable player input / shooting
@@ -162,7 +143,4 @@ public class GameManager : MonoBehaviour
 
         // 5. TODO: show Game Over UI
     }
-
-
-
 }
