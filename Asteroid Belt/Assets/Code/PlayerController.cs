@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float laserRange = 1000f;
     [SerializeField] private int laserDamage = 10;
 
+    [SerializeField] private AudioSource fireSoundSource; // assign an AudioSource with the clip in the Inspector
+
+
     private Vector3 currentAimDir = Vector3.right;
     private bool hasValidAim = false;
 
@@ -127,6 +130,14 @@ public class PlayerController : MonoBehaviour
             {
                 laserProj.Init(currentAimDir);
             }
+
+            if (fireSoundSource != null)
+            {
+                // AudioSource.PlayClipAtPoint(fireSoundSource.clip, tip.position);
+                // Or to play on the assigned source without creating a temporary one:
+                fireSoundSource.Play();
+            }
+
         }
 
         // 3) Optional: keep your muzzle flash / laser PS at the tip
