@@ -1346,6 +1346,7 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &969224698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1379,6 +1380,8 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 =======
 >>>>>>> parent of 59f4b245 (Reapply "Merge branch 'shootingParticle'")
+=======
+>>>>>>> parent of c51494c3 (test 2.1.1.1.1.1)
 --- !u!1 &1019905579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2292,6 +2295,9 @@ SceneRoots:
   - {fileID: 592699495}
   - {fileID: 836227082}
 <<<<<<< HEAD
+<<<<<<< HEAD
   - {fileID: 969224699}
 =======
 >>>>>>> parent of 59f4b245 (Reapply "Merge branch 'shootingParticle'")
+=======
+>>>>>>> parent of c51494c3 (test 2.1.1.1.1.1)
