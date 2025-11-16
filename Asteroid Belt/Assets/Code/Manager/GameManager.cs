@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.VFX;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     [Header("Economy")]
     public int totalMoney;
     public int roundMoney;
+    [SerializeField] private TextMeshProUGUI totalMoneyText;
+    [SerializeField] private TextMeshProUGUI roundMoneyText;
 
     [Header("Spawners (VFX Graph)")]
     [SerializeField] private VisualEffect[] spawnSystems;
@@ -142,5 +145,17 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
 
         // 5. TODO: show Game Over UI
+    }
+
+    public void AddMoney(int amount)
+    {
+        roundMoney += amount;
+        Debug.Log($"Added {amount} money. Round Money: {roundMoney}, Total Money: {totalMoney}");
+        roundMoneyText.text = $"Round Money: {roundMoney}";
+        if (roundMoney > totalMoney)
+        {
+            totalMoney = roundMoney;
+            totalMoneyText.text = $"Total Money: {totalMoney}";
+        }
     }
 }

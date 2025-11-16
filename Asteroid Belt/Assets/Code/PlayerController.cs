@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int laserDamage = 10;
 
     [SerializeField] private AudioSource fireSoundSource; // assign an AudioSource with the clip in the Inspector
-
+    public GameManager gameManager;
 
     private Vector3 currentAimDir = Vector3.right;
     private bool hasValidAim = false;
@@ -113,7 +113,9 @@ public class PlayerController : MonoBehaviour
             hasHit = true;
 
             // If you want hitscan damage instead of projectile collision:
-             Destroy(hit.collider.gameObject);
+            Destroy(hit.collider.gameObject);
+            GameManager.Instance.AddMoney(5);
+            Debug.Log("Hit " + hit.collider.gameObject.name + " for " + laserDamage + " damage!");
         }
 
         // 2) Spawn projectile that visually travels along the same direction
