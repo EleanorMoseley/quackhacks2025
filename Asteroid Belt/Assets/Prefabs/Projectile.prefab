@@ -179,42 +179,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8920683247042100192, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
-      propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8920683247042100192, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
-      propertyPath: CollisionModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8920683247042100192, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
-      propertyPath: CollisionModule.quality
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8920683247042100192, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
-      propertyPath: CollisionModule.voxelSize
-      value: 0.0001
-      objectReference: {fileID: 0}
-    - target: {fileID: 8920683247042100192, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
-      propertyPath: CollisionModule.radiusScale
-      value: 11.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 8920683247042100192, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
-      propertyPath: TrailModule.lifetime.scalar
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 8920683247042100192, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 8920683247042100192, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
-      propertyPath: CollisionModule.collisionMessages
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8920683247042100192, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
-      propertyPath: CollisionModule.collidesWith.m_Bits
-      value: 51
-      objectReference: {fileID: 0}
     - target: {fileID: 9195430496888204363, guid: 81e148d2acb85194fb69aa25721a0237, type: 3}
       propertyPath: m_Name
       value: Shooter
