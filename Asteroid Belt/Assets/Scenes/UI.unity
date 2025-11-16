@@ -6528,6 +6528,7 @@ MonoBehaviour:
   target: {fileID: 1675453642}
   orbitSpeed: 15
   axis: {x: 0, y: 1, z: 0}
+  gameStarted: 0
 --- !u!1 &1019905579
 GameObject:
   m_ObjectHideFlags: 0
@@ -7214,6 +7215,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7723722626103101804, guid: 3cf4a1243deab4b4996fcb91b98aa295, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 7723722626103101804, guid: 3cf4a1243deab4b4996fcb91b98aa295, type: 3}
+      propertyPath: autoOrbit
+      value: 
+      objectReference: {fileID: 963194230}
     - target: {fileID: 7723722626103101804, guid: 3cf4a1243deab4b4996fcb91b98aa295, type: 3}
       propertyPath: endButton
       value: 

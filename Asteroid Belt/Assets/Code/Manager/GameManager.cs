@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Button endButton;
 
+    [SerializeField] private Camera cam;
+    [SerializeField] private AutoOrbit autoOrbit;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -79,7 +81,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("StartRound called!");
 
         CurrentState = GameState.Playing;
+        autoOrbit.gameStarted = true;
         Time.timeScale = 1f;
+
+        cam.transform.position = new Vector3(0, 4.38f, -22.8f);
+        cam.transform.rotation = new Quaternion(0, 0, 0, 1);
+        cam.transform.localScale = new Vector3(1, 1, 1);
 
         // Re-enable player input / shooting
         var playerController = FindObjectOfType<PlayerController>();
