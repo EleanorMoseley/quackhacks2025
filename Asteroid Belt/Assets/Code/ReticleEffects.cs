@@ -1,46 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ReticleEffects : MonoBehaviour
 {
     private Transform reticleTransform;
+    private Vector3 baseScale;
 
     [Header("Recoil Settings")]
-    [SerializeField] private float recoilStrength = 0.1f;       // Controls how large the reticle expansion is
-    [SerializeField] private float recoilFrequency = 20f;      // Controls how fast the reticle expands and contracts
-    [SerializeField] private float damping = 0.98f;              // 0.9 = fast, fade, 0.99 = slow fade
-    [SerializeField] private float minScale = 0.8f;
-    [SerializeField] private float maxScale = 1.3f;
-    [SerializeField] private float randomShake = 0.02f;
-
-    private float currentStrength;
+    [SerializeField] private float recoilFrequency = 20f;   // how fast it pulses
+    [SerializeField] private float minScale = 0.8f;         // minimum multiplier
+    [SerializeField] private float maxScale = 1.3f;         // maximum multiplier
 
     void Start()
     {
-        reticleTransform = this.transform;
+        reticleTransform = transform;
+        baseScale = reticleTransform.localScale;
     }
 
     void Update()
     {
-        RecoilEffect(reticleTransform);
+        RecoilEffect();
     }
 
-    private void RecoilEffect(Transform transform)
+    private void RecoilEffect()
     {
-        currentStrength = Mathf.Lerp(currentStrength, recoilStrength, Time.deltaTime * 10f);
-        currentStrength *= damping;
+        // Sin wave between -1 and 1
+        float s = Mathf.Sin(Time.time * recoilFrequency);
 
-        float pulse = Mathf.Sin(Time.time * recoilFrequency) * currentStrength;
+        // Remap -1..1 -> 0..1
+        float t = (s + 1f) * 0.5f;
 
-        Vector3 targetScale =
-            Vector3.one * (1f + pulse)
-            + (Vector3.one * Random.Range(-randomShake, randomShake));
+        // Lerp between min and max scale multipliers
+        float scaleFactor = Mathf.Lerp(minScale, maxScale, t);
 
-
-        float clamped = Mathf.Clamp(targetScale.x, minScale, maxScale);
-        transform.localScale = Vector3.one * clamped;
-
-        //transform.localScale += Mathf.Sin(Time.time * 20) * 0.1f * Vector3.one;
+        // Apply relative to original size
+        reticleTransform.localScale = baseScale * scaleFactor;
     }
 }
